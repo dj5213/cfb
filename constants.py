@@ -1,12 +1,9 @@
 CREDS = {
-    'client_secret': '7mlfg8Cyf3Hw4E-nOSPymX3ufMA',
-    'client_id': '3jJ9yeAS6ZgPlQ'
+    'client_secret': '',
+    'client_id': ''
 }
 
-CUSTOM_STOPWORDS_LIST = [
-    'fuck',
-    'fucking',
-    'game'
-]
+# Put words in here that you want to filter out from wordcloud
+CUSTOM_STOPWORDS_LIST = []
 
 EMPTY_LIST_VALUES = [None, 'r', '', ' ']
