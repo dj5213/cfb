@@ -34,6 +34,6 @@ This app lets you:
 
 `./scraper.py --submission_id '5n37kq' --comments_limit 1000 --filter_by flair --filter_text 'Clemson Tigers' --create_wordcloud --wordcloud_name Clemson_wordcloud`
 
-*Search for Crimson Tide folks mentioning Kiffin*:
+*Search for Crimson Tide folks saying congratulations*:
 
 `./scraper.py --submission_id '5n37kq' --comments_limit 1000 --filter_by flair --filter_text 'Alabama Crimson Tide' --keyword_search 'Congratulations'`
