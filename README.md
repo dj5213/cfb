@@ -29,3 +29,9 @@ This app lets you:
 ### Do keyword searching through a submission's comments
 `./scraper.py --submission_id '5n37kq' --comments_limit 1000 --keyword_search 'kiffin'`
 
+### Create interesting combinations of the above:
+*Wordcloud for comments by Clemson fans*
+`./scraper.py --submission_id '5n37kq' --comments_limit 1000 --filter_by flair --filter_text 'Clemson Tigers' --create_wordcloud --wordcloud_name Clemson_wordcloud`
+
+*Search for Crimson Tide folks mentioning Kiffin*
+`./scraper.py --submission_id '5n37kq' --comments_limit 1000 --filter_by flair --filter_text 'Alabama Crimson Tide' --keyword_search 'Congratulations'`

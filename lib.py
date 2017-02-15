@@ -13,8 +13,6 @@ def authorized_reddit_instance():
     that requires auth on Reddit.
     """
     reddit_username = raw_input("Enter your username:\n")
-    # I don't like plain-texting passwords -
-    # wil request every time script runs
     reddit_pw = getpass("Enter your password:\n")
 
     reddit = praw.Reddit(
