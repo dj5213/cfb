@@ -1,6 +1,6 @@
 CREDS = {
-    'client_secret': 'im9205T7DcCV39i8ELW_g2qh_9c',
-    'client_id': '0MDEziGE1Ba_IQ'
+    'client_secret': 'secret',
+    'client_id': 'id'
 }
 
 # Put words in here that you want to filter out from wordcloud

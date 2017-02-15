@@ -20,7 +20,7 @@ This app lets you:
 
 `./scraper.py --submission_id '5n37kq' --comments_limit 1000 --filter_by flair --filter_text 'Alabama Crimson Tide'`
 
-### Break down for a submission by flair
+### Break down comments for a submission by flair
 `./scraper.py --submission_id '5n37kq' --show_comments_by_flair --comments_limit 1000`
 
 ### Create wordlclouds for comments
