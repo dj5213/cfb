@@ -4,7 +4,7 @@ import os
 import sys
 
 from collections import Counter
-from lib import authorized_reddit_instance, generate_wc
+from lib import authorized_reddit_instance, generate_wc, generate_heatmap
 from os import path
 
 from constants import EMPTY_LIST_VALUES
@@ -13,15 +13,15 @@ os.path.join(os.path.dirname(__file__))
 
 
 class RedditScraper(object):
-    def __init__(self, submission_id):
-        self.reddit = authorized_reddit_instance()
+    def __init__(self, submission_id='5n37kq', use_login=False):
+        self.reddit = authorized_reddit_instance(use_login)
         self.submission_id = submission_id
 
-    def get_comments_for_submission(self, limit=None):
+    def get_comments_for_submission(self, limit=None, more_comments_limit=32):
         # Only showing top level comments right now
         submission = self.reddit.submission(id=self.submission_id)
 
-        submission.comments.replace_more(limit=10, threshold=0)
+        submission.comments.replace_more(limit=more_comments_limit, threshold=2)
         comments = submission.comments.list()
 
         return comments[:limit]
@@ -47,21 +47,35 @@ class RedditScraper(object):
                 results_list.append(comment)
         return results_list
 
-    def breakup_flair_pairs(self, flair_list):
+    def comment_by_flair(self, comments_list):
+        count = Counter()
+        for flair in self._breakup_flair_pairs(comments_list):
+            count[flair.strip()] += 1
+        return count
+
+    def create_heatmap_from_submission(self):
+        """
+        This outputs a heatmap generated from the flairs for each comment in
+        a submission. Right now it only works using a Jupyter notebook.
+
+        TODO: add CLI integration to open Jupyter with heatmap generator running
+        """
+        # Adding in more_comments limit of 50 to increase datapoints
+        comments_list = self.get_comments_for_submission(more_comments_limit=50)
+        flair_list = self._breakup_flair_pairs(comments_list)
+
+        return generate_heatmap(flair_list)
+
+    def _breakup_flair_pairs(self, comments_list):
+        flair_list = [comment.author_flair_text for comment in comments_list
+                      if comment.author_flair_text is not None]
+
         flattened_flair_list = []
         for flair in flair_list:
             flattened_flair_list.extend(flair.split('/'))
         flattened_flair_list = [
-            flair for flair in flattened_flair_list if flair not in EMPTY_LIST_VALUES]
+            flair.strip() for flair in flattened_flair_list if flair not in EMPTY_LIST_VALUES]
         return flattened_flair_list
-
-    def comment_by_flair(self, comments_list):
-        count = Counter()
-        flair_list = [comment.author_flair_text for comment in comments_list
-                      if comment.author_flair_text is not None]
-        for flair in self.breakup_flair_pairs(flair_list):
-            count[flair.strip()] += 1
-        return count
 
 
 def setup_args():
@@ -120,6 +134,8 @@ def setup_args():
         help='Text to use for filter',
         required=False)
 
+    parser.add_argument('--login', action='store_true')
+
     args = parser.parse_args()
 
     if (args.filter_by and args.filter_text is None or
@@ -131,7 +147,7 @@ def setup_args():
 def main():
     args = setup_args()
 
-    scraper = RedditScraper(args.submission_id)
+    scraper = RedditScraper(args.submission_id, True if args.login else False)
     comments_list = scraper.get_comments_for_submission(args.comments_limit)
 
     if args.show_all_comments:

@@ -8,7 +8,9 @@ This a simple script that helps process data from reddit threads and might highl
 
 `pip install -r requirements.txt`
 
-You'll also need to create a reddit app [here](https://ssl.reddit.com/prefs/apps) to connect to the API.
+You'll also need to create a reddit app [here](https://ssl.reddit.com/prefs/apps) to connect to the API. Add your `client_id` and `client_secret` in `constants.py`
+
+If you want to create heatmaps, you'll need to install [Jupyter](http://jupyter.org/). The heatmap creation needs some map and widget data.
 
 ---
 
@@ -37,3 +39,13 @@ This app lets you:
 *Search for Crimson Tide folks saying congratulations*:
 
 `./scraper.py --submission_id '5n37kq' --comments_limit 1000 --filter_by flair --filter_text 'Alabama Crimson Tide' --keyword_search 'Congratulations'`
+
+### You can also create a heatmap by commentor flair
+
+Open up a `jupyter` notebook:
+
+```
+jupyter notebook
+```
+
+Then you can either create your own setup, or open the provided `CFB Comment Heatmap.ipynb` to generate the heatmap.
