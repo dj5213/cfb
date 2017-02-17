@@ -1,6 +1,6 @@
 CREDS = {
-    'client_secret': 'SECRET',
-    'client_id': 'ID'
+    'client_secret': '',
+    'client_id': ''
 }
 
 # Put words in here that you want to filter out from wordcloud

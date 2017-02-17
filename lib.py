@@ -2,6 +2,7 @@ import csv
 import gmaps
 import json
 import praw
+import sys
 import time
 import urllib2
 
@@ -24,6 +25,11 @@ def authorized_reddit_instance(use_login=False, reddit_username='', reddit_pw=''
     optional - only need those if you want to view anything
     that requires auth on Reddit.
     """
+    if not CREDS.get('client_id') or not CREDS.get('client_secret'):
+        print "No client_id or client_secret found - please enter in constants.py to continue"
+        print "EXITING"
+        sys.exit()
+
     if use_login:
         reddit_username = raw_input("Enter your username:\n")
         reddit_pw = getpass("Enter your password:\n")
